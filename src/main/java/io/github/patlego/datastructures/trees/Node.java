@@ -22,5 +22,9 @@ public interface Node<T> extends Comparable {
     public @Nonnull Boolean hasParent();
 
     public @Nonnull Node<T> getParent();
+
+    public T getData();
+
+    public void setData(T data);
     
 }
