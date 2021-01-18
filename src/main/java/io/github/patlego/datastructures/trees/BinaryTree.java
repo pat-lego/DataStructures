@@ -6,7 +6,7 @@ import javax.annotation.Nonnull;
 
 public abstract class BinaryTree implements Tree {
 
-    private Node root;
+    protected Node root;
 
     public <T> BinaryTree(Node<T> node) {
         if (node == null) {
@@ -19,7 +19,7 @@ public abstract class BinaryTree implements Tree {
 
     public abstract @Nonnull <T> Boolean remove(@Nonnull Node<T> node);
 
-    public abstract @Nonnull <T> List<Node<T>> getAllNodes();
+    public abstract @Nonnull <T> List<Node<T>> getAllNodes(Node<T> start);
 
     @Override
     public <T> Boolean isRoot(Node<T> node) {
@@ -37,6 +37,6 @@ public abstract class BinaryTree implements Tree {
 
     @Override
     public Integer size() {
-        return this.getAllNodes().size();
+        return this.getAllNodes(this.root).size();
     }
 }
