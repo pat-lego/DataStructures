@@ -11,4 +11,12 @@ public interface Tree {
     public @Nonnull <T> Node<T> getRoot();
 
     public @Nonnull @Nonnegative Integer size();
+
+    public @Nonnull <T> Boolean hasParent(Node<T> node);
+
+    public @Nonnull <T> Node<T> getParent(Node<T> node);
+
+    public @Nonnull <T> Boolean delete(Node<T> node);
+
+    public @Nonnull <T> Boolean add(Node<T> node);
 }
