@@ -2,6 +2,7 @@ package io.github.patlego.datastructures;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.withSettings;
 
@@ -90,6 +91,69 @@ public class TestBinaryTree {
 
         assertNotNull(root.getLeft().getLeft());
         assertEquals("Serge", root.getLeft().getLeft().getData());
+    }
+
+    @Test
+    public void testGetParent() {
+        BinaryNode root = Mockito.mock(BinaryNode.class);
+        BinaryNode left = Mockito.mock(BinaryNode.class);
+        BinaryNode right = Mockito.mock(BinaryNode.class);
+
+        Mockito.when(root.getData()).thenReturn("root");
+        Mockito.when(left.getData()).thenReturn("left");
+        Mockito.when(right.getData()).thenReturn("right");
+
+        Mockito.when(root.compareTo("root")).thenReturn(0);
+        Mockito.when(left.compareTo("left")).thenReturn(0);
+        Mockito.when(right.compareTo("right")).thenReturn(0);
+        Mockito.when(root.compareTo("left")).thenReturn(-1);
+        Mockito.when(root.compareTo("right")).thenReturn(-1);
+
+        Mockito.when(root.hasChildren()).thenReturn(Boolean.TRUE);
+        Mockito.when(left.hasChildren()).thenReturn(Boolean.FALSE);
+        Mockito.when(right.hasChildren()).thenReturn(Boolean.FALSE);
+
+        Mockito.when(root.getLeft()).thenReturn(left);
+        Mockito.when(root.getRight()).thenReturn(right);
+
+        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
+
+        assertEquals("root", tree.getParent(left).getData());
+        assertEquals("root", tree.getParent(right).getData());
+    }
+
+    @Test
+    public void testExists() {
+        BinaryNode root = Mockito.mock(BinaryNode.class);
+        BinaryNode left = Mockito.mock(BinaryNode.class);
+        BinaryNode right = Mockito.mock(BinaryNode.class);
+
+        Mockito.when(root.getLeft()).thenReturn(left);
+        Mockito.when(root.getRight()).thenReturn(right);
+
+        Mockito.when(root.getData()).thenReturn("root");
+        Mockito.when(left.getData()).thenReturn("left");
+        Mockito.when(right.getData()).thenReturn("right");
+
+        Mockito.when(root.compareTo(root)).thenReturn(0);
+        Mockito.when(root.compareTo(left)).thenReturn(-1);
+        Mockito.when(root.compareTo(right)).thenReturn(-1);
+
+        Mockito.when(left.compareTo(left)).thenReturn(0);
+        Mockito.when(left.compareTo(root)).thenReturn(-1);
+        Mockito.when(left.compareTo(right)).thenReturn(-1);
+
+        Mockito.when(right.compareTo(right)).thenReturn(0);
+        Mockito.when(right.compareTo(root)).thenReturn(-1);
+        Mockito.when(right.compareTo(left)).thenReturn(-1);
+
+        Mockito.when(root.hasChildren()).thenReturn(Boolean.TRUE);
+        
+        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        Mockito.when(tree.exists(Mockito.any())).thenCallRealMethod();
+
+        assertTrue(tree.exists(right));
     }
     
 }
