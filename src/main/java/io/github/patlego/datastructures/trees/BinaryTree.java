@@ -56,7 +56,101 @@ public abstract class BinaryTree<T> implements Tree {
         return root;
     }
 
-    public abstract @Nonnull Boolean remove(@Nonnull BinaryNode<T> node);
+    public @Nonnull Boolean remove(@Nonnull BinaryNode<T> node) {
+        if (node.hasChildren()) {
+            if (node.getLeft() != null && node.getRight() != null) {
+                BinaryNode min = findMin(node.getRight());
+          
+                Boolean removed = remove(min);
+                BinaryNode parent = (BinaryNode) getParent(node);
+
+                // Trying to delete root
+                if (parent == null) {
+                    if (node.getLeft() != null && node.getLeft().compareTo(min) != 0) {
+                        min.setLeft(node.getLeft());
+                    }
+
+                    if (node.getRight() != null && node.getRight().compareTo(min) != 0) {
+                        min.setRight(node.getLeft());
+                    }
+                    node = min;
+                    return removed && Boolean.TRUE;
+                } else {
+                    if (parent.getLeft().compareTo(node) == 0) {
+                        parent.setLeft(min);
+                        min.setLeft(node.getLeft());
+                        min.setRight(node.getRight());
+                        return removed && Boolean.TRUE;
+                    }
+
+                    if (parent.getRight().compareTo(node) == 0) {
+                        parent.setRight(min);
+                        min.setLeft(node.getLeft());
+                        min.setRight(node.getRight());
+                        return removed && Boolean.TRUE;
+                    }
+                }
+            }
+
+            // Either node only has one child
+
+            if (node.getLeft() != null) {
+                BinaryNode parent = (BinaryNode) getParent(node);
+                if (parent.getLeft().compareTo(node) == 0) {
+                    parent.setLeft(node.getLeft());
+                    return Boolean.TRUE;
+                }
+
+                if (parent.getRight().compareTo(node) == 0) {
+                    parent.setRight(node.getLeft());
+                    return Boolean.TRUE;
+                }
+            }
+
+            if (node.getRight() != null) {
+                BinaryNode parent = (BinaryNode) getParent(node);
+                if (parent.getLeft().compareTo(node) == 0) {
+                    parent.setLeft(node.getRight());
+                }
+
+                if (parent.getRight().compareTo(node) == 0) {
+                    parent.setRight(node.getRight());
+                }
+            }
+
+        } else {
+            BinaryNode parent = (BinaryNode) getParent(node);
+             if (parent.getLeft().compareTo(node) == 0) {
+                parent.setLeft(null);
+                return Boolean.TRUE;
+            }
+
+            if (parent.getRight().compareTo(node) == 0) {
+                parent.setRight(null);
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
+
+    public @Nonnull BinaryNode<T> findMin(@Nonnull BinaryNode<T> node) {
+        if (node.hasChildren()) {
+            if (node.getLeft() != null) {
+                return findMin(node.getLeft());
+            }
+        }
+        return node;
+    }
+
+    public @Nonnull BinaryNode<T> findMax(@Nonnull BinaryNode<T> node) {
+        if (node.hasChildren()) {
+            if (node.getRight() != null) {
+                return findMax(node.getRight());
+            }
+        }
+        return node;
+    }
 
     public @Nonnull Boolean exists(@Nonnull BinaryNode<T> node) {
         return _exists(node, this.root);
@@ -138,16 +232,17 @@ public abstract class BinaryTree<T> implements Tree {
             return previous;
         }
 
+        Node<T> parent = null;
         if (root.hasChildren()) {
             if (root.getLeft() != null) {
-                return _getParent(data, root.getLeft(), root);
+                parent = _getParent(data, root.getLeft(), root);
             }
 
             if (root.getRight() != null) {
-                return _getParent(data, root.getRight(), root);
+                parent = _getParent(data, root.getRight(), root);
             }
         }
 
-        return null;
+        return parent;
     }
 }
