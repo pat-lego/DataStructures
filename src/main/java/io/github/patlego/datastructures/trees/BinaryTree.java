@@ -56,7 +56,7 @@ public abstract class BinaryTree<T> implements Tree {
         return root;
     }
 
-    public abstract Boolean remove(@Nonnull BinaryNode<T> node);
+    public abstract @Nonnull Boolean remove(@Nonnull BinaryNode<T> node);
 
     public @Nonnull Boolean exists(@Nonnull BinaryNode<T> node) {
         return _exists(node, this.root);
