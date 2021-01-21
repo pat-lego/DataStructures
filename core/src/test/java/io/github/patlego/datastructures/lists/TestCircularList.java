@@ -10,14 +10,24 @@ import org.mockito.Mockito;
 public class TestCircularList {
 
     @Test
-    public void testGetHead_GetTail() {
+    public void testGetHead_GetTail() throws CloneNotSupportedException {
         LinkedItem item_1 = Mockito.mock(LinkedItem.class, withSettings().useConstructor(1));
+
+        LinkedItem cp_item_1 = Mockito.mock(LinkedItem.class, withSettings().useConstructor(1));
+
+        Mockito.when(item_1.clone()).thenReturn(cp_item_1);
        
         doCallRealMethod().when(item_1).getData();
         doCallRealMethod().when(item_1).next();
         doCallRealMethod().when(item_1).previous();
         doCallRealMethod().when(item_1).setNext(Mockito.any());
         doCallRealMethod().when(item_1).setPrevious(Mockito.any());
+
+        doCallRealMethod().when(cp_item_1).getData();
+        doCallRealMethod().when(cp_item_1).next();
+        doCallRealMethod().when(cp_item_1).previous();
+        doCallRealMethod().when(cp_item_1).setNext(Mockito.any());
+        doCallRealMethod().when(cp_item_1).setPrevious(Mockito.any());
        
         CircularList list = Mockito.mock(CircularList.class, withSettings().useConstructor(item_1));
 
