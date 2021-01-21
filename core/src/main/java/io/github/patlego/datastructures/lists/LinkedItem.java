@@ -1,6 +1,6 @@
 package io.github.patlego.datastructures.lists;
 
-public abstract class LinkedItem<T> implements Item<T> {
+public abstract class LinkedItem<T> implements Item<T>, Cloneable {
 
     private T data;
     private Item<T> next;
@@ -48,17 +48,11 @@ public abstract class LinkedItem<T> implements Item<T> {
 
     @Override
     public void setPrevious(Item item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Cannot submit a null Item as previous");
-        }
         this.previous = item;
     }
 
     @Override
     public void setNext(Item item) {
-        if (item == null) {
-            throw new IllegalArgumentException("Cannot submit a null Item as next");
-        }
         this.next = item;
     }
 

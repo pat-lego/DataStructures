@@ -13,8 +13,8 @@ public abstract class CircularList implements List {
             throw new IllegalArgumentException("Cannot have a null node in the list");
         }
 
-        head = (Item) node.clone();
-        tail = (Item) node.clone();
+        head = node;
+        tail = node;
 
         head.setNext(tail);
         head.setPrevious(tail);
@@ -45,10 +45,10 @@ public abstract class CircularList implements List {
         if (exists(item)) {
             return Boolean.FALSE;
         }
-
         tail.setNext(item);
-        item.setNext(head);
         item.setPrevious(tail);
+
+        item.setNext(head);
         head.setPrevious(item);
         tail = item;
         return Boolean.TRUE;
@@ -64,11 +64,16 @@ public abstract class CircularList implements List {
             return Boolean.FALSE;
         }
 
-        Item previous = item.previous();
-        previous.setNext(item.next());
+        item.next().setPrevious(item.previous());
+        item.previous().setNext(item.next());
 
-        Item next = item.next();
-        next.setPrevious(item.previous());
+        if (head.compareTo(item.getData()) == 0) {
+            head = item.next();
+        } 
+
+        if (tail.compareTo(item.getData()) == 0) {
+            tail = item.previous();
+        } 
 
         item = null;
 
