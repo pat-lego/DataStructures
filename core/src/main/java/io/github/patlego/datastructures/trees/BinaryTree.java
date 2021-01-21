@@ -9,11 +9,11 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class BinaryTree<T> implements Tree {
+public abstract class BinaryTree implements Tree {
 
-    protected BinaryNode<T> root;
+    protected BinaryNode root;
 
-    public BinaryTree(BinaryNode<T> node) {
+    public BinaryTree(BinaryNode node) {
         if (node == null) {
             throw new IllegalArgumentException(
                     "The node provided is null and must be defined in order to properly define a binary tree");
@@ -21,15 +21,15 @@ public abstract class BinaryTree<T> implements Tree {
         this.root = node;
     }
 
-    public @Nonnull Boolean add(@Nonnull BinaryNode<T> node) {
-        BinaryNode<T> parent = this._add(node, this.root);
+    public @Nonnull Boolean add(@Nonnull BinaryNode node) {
+        BinaryNode parent = this._add(node, this.root);
 
-        if (parent.compareTo(node) < 0) {
+        if (parent.compareTo(node.getData()) < 0) {
             parent.setRight(node);
             return Boolean.TRUE;
         }
 
-        if (parent.compareTo(node) > 0) {
+        if (parent.compareTo(node.getData()) > 0) {
             parent.setLeft(node);
             return Boolean.TRUE;
         }
@@ -37,16 +37,16 @@ public abstract class BinaryTree<T> implements Tree {
         return Boolean.FALSE;
     }
 
-    private @Nonnull BinaryNode _add(@Nonnull BinaryNode<T> node, @Nonnull BinaryNode<T> root) {
+    private @Nonnull BinaryNode _add(@Nonnull BinaryNode node, @Nonnull BinaryNode root) {
         if (root.hasChildren()) {
-            if (root.compareTo(node) < 0) {
+            if (root.compareTo(node.getData()) < 0) {
                 if (root.getRight() != null) {
                     return _add(node, root.getRight());
                 } else {
                     return root;
                 }
             }
-            if (root.compareTo(node) > 0) {
+            if (root.compareTo(node.getData()) > 0) {
                 if (root.getLeft() != null) {
                     return _add(node, root.getLeft());
                 } else {
@@ -57,35 +57,36 @@ public abstract class BinaryTree<T> implements Tree {
         return root;
     }
 
-    public @Nonnull Boolean remove(@Nonnull BinaryNode<T> node) {
+    public @Nonnull Boolean delete(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             // Node has 2 children
             if (node.getLeft() != null && node.getRight() != null) {
                 BinaryNode min = findMin(node.getRight());
 
-                Boolean removed = remove(min);
+                Boolean removed = delete(min);
                 BinaryNode parent = (BinaryNode) getParent(node);
 
                 // Trying to delete root
                 if (parent == null) {
-                    if (node.getLeft() != null && node.getLeft().compareTo(min) != 0) {
+                    if (node.getLeft() != null && node.getLeft().compareTo(min.getData()) != 0) {
                         min.setLeft(node.getLeft());
                     }
 
-                    if (node.getRight() != null && node.getRight().compareTo(min) != 0) {
+                    if (node.getRight() != null && node.getRight().compareTo(min.getData()) != 0) {
                         min.setRight(node.getLeft());
                     }
                     node = min;
+                    root = min;
                     return removed && Boolean.TRUE;
                 } else {
-                    if (parent.getLeft().compareTo(node) == 0) {
+                    if (parent.getLeft().compareTo(node.getData()) == 0) {
                         parent.setLeft(min);
                         min.setLeft(node.getLeft());
                         min.setRight(node.getRight());
                         return removed && Boolean.TRUE;
                     }
 
-                    if (parent.getRight().compareTo(node) == 0) {
+                    if (parent.getRight().compareTo(node.getData()) == 0) {
                         parent.setRight(min);
                         min.setLeft(node.getLeft());
                         min.setRight(node.getRight());
@@ -97,12 +98,12 @@ public abstract class BinaryTree<T> implements Tree {
             // Node only has one child
             if (node.getLeft() != null) {
                 BinaryNode parent = (BinaryNode) getParent(node);
-                if (parent.getLeft().compareTo(node) == 0) {
+                if (parent.getLeft().compareTo(node.getData()) == 0) {
                     parent.setLeft(node.getLeft());
                     return Boolean.TRUE;
                 }
 
-                if (parent.getRight().compareTo(node) == 0) {
+                if (parent.getRight().compareTo(node.getData()) == 0) {
                     parent.setRight(node.getLeft());
                     return Boolean.TRUE;
                 }
@@ -110,11 +111,11 @@ public abstract class BinaryTree<T> implements Tree {
 
             if (node.getRight() != null) {
                 BinaryNode parent = (BinaryNode) getParent(node);
-                if (parent.getLeft().compareTo(node) == 0) {
+                if (parent.getLeft().compareTo(node.getData()) == 0) {
                     parent.setLeft(node.getRight());
                 }
 
-                if (parent.getRight().compareTo(node) == 0) {
+                if (parent.getRight().compareTo(node.getData()) == 0) {
                     parent.setRight(node.getRight());
                 }
             }
@@ -122,12 +123,12 @@ public abstract class BinaryTree<T> implements Tree {
         } else {
             BinaryNode parent = (BinaryNode) getParent(node);
             if (parent != null) {
-                if (parent.getLeft().compareTo(node) == 0) {
+                if (parent.getLeft().compareTo(node.getData()) == 0) {
                     parent.setLeft(null);
                     return Boolean.TRUE;
                 }
 
-                if (parent.getRight().compareTo(node) == 0) {
+                if (parent.getRight().compareTo(node.getData()) == 0) {
                     parent.setRight(null);
                     return Boolean.TRUE;
                 }
@@ -138,7 +139,7 @@ public abstract class BinaryTree<T> implements Tree {
         return Boolean.FALSE;
     }
 
-    public @Nonnull BinaryNode<T> findMin(@Nonnull BinaryNode<T> node) {
+    public @Nonnull BinaryNode findMin(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             if (node.getLeft() != null) {
                 return findMin(node.getLeft());
@@ -147,7 +148,7 @@ public abstract class BinaryTree<T> implements Tree {
         return node;
     }
 
-    public @Nonnull BinaryNode<T> findMax(@Nonnull BinaryNode<T> node) {
+    public @Nonnull BinaryNode findMax(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             if (node.getRight() != null) {
                 return findMax(node.getRight());
@@ -156,12 +157,12 @@ public abstract class BinaryTree<T> implements Tree {
         return node;
     }
 
-    public @Nonnull Boolean exists(@Nonnull BinaryNode<T> node) {
+    public @Nonnull Boolean exists(@Nonnull BinaryNode node) {
         return _exists(node, this.root);
     }
 
-    private @Nonnull Boolean _exists(@Nonnull BinaryNode<T> node, @Nonnull BinaryNode root) {
-        if (node.compareTo(root) == 0) {
+    private @Nonnull Boolean _exists(@Nonnull BinaryNode node, @Nonnull BinaryNode root) {
+        if (node.compareTo(root.getData()) == 0) {
             return Boolean.TRUE;
         }
         Boolean left = Boolean.FALSE;
@@ -180,12 +181,12 @@ public abstract class BinaryTree<T> implements Tree {
         return (left || right);
     }
 
-    public @Nonnull List<BinaryNode<T>> getAllNodes() {
+    public @Nonnull List<BinaryNode> getAllNodes() {
         return this._getAllNodes(this.root);
     }
 
-    private @Nonnull List<BinaryNode<T>> _getAllNodes(@Nonnull BinaryNode<T> start) {
-        List<BinaryNode<T>> nodes = new LinkedList<>();
+    private @Nonnull List<BinaryNode> _getAllNodes(@Nonnull BinaryNode start) {
+        List<BinaryNode> nodes = new LinkedList<>();
         if (start.hasChildren()) {
             if (start.getLeft() != null) {
                 nodes.addAll(_getAllNodes(start.getLeft()));
@@ -209,7 +210,7 @@ public abstract class BinaryTree<T> implements Tree {
     }
 
     @Override
-    public @Nonnull Node<T> getRoot() {
+    public @Nonnull Node getRoot() {
         return this.root;
     }
 
@@ -218,7 +219,7 @@ public abstract class BinaryTree<T> implements Tree {
         if (node == null) {
             return Boolean.FALSE;
         }
-        return (this.root.compareTo(node) == 0);
+        return (this.root.compareTo(node.getData()) == 0);
     }
 
     @Override

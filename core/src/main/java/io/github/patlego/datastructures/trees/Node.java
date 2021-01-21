@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public interface Node<T> extends Comparable {
+public interface Node<T> extends Comparable<T> {
 
     /**
      * Returns true if this node has children associated to it, False if this node is a leaf node

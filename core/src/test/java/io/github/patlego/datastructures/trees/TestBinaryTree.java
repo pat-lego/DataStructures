@@ -1,4 +1,4 @@
-package io.github.patlego.datastructures;
+package io.github.patlego.datastructures.trees;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,9 +8,6 @@ import static org.mockito.Mockito.withSettings;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import io.github.patlego.datastructures.trees.BinaryNode;
-import io.github.patlego.datastructures.trees.BinaryTree;
 
 public class TestBinaryTree {
 
@@ -53,43 +50,44 @@ public class TestBinaryTree {
 
     @Test
     public void testAdd() {
-        BinaryNode root = Mockito.mock(BinaryNode.class);
-        BinaryNode left = Mockito.mock(BinaryNode.class);
-        BinaryNode left_left = Mockito.mock(BinaryNode.class);
+        BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(4));
+        BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
+        BinaryNode left_left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(1));
 
         Mockito.when(root.hasChildren()).thenCallRealMethod();
         Mockito.when(left.hasChildren()).thenCallRealMethod();
         Mockito.when(left_left.hasChildren()).thenCallRealMethod();
 
-        Mockito.when(root.compareTo(left)).thenReturn(1);
-        Mockito.when(root.compareTo(left_left)).thenReturn(1);
-        Mockito.when(left.compareTo(left_left)).thenReturn(1);
+        Mockito.when(root.getData()).thenCallRealMethod();
+        Mockito.when(left.getData()).thenCallRealMethod();
+        Mockito.when(left_left.getData()).thenCallRealMethod();
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        Mockito.when(root.compareTo(2)).thenReturn(1);
+        Mockito.when(root.compareTo(1)).thenReturn(1);
+        Mockito.when(left.compareTo(1)).thenReturn(1);
 
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.add(Mockito.any())).thenCallRealMethod();
 
         Mockito.when(root.getLeft()).thenCallRealMethod();
         Mockito.when(root.getRight()).thenCallRealMethod();
         doCallRealMethod().when(root).setLeft(Mockito.any());
         doCallRealMethod().when(root).setRight(Mockito.any());
-        Mockito.when(left.getData()).thenReturn("Pat");
 
         tree.add(left);
 
         assertNotNull(root.getLeft());
-        assertEquals("Pat", root.getLeft().getData());
+        assertEquals(2, root.getLeft().getData());
 
         Mockito.when(left.getLeft()).thenCallRealMethod();
         Mockito.when(left.getRight()).thenCallRealMethod();
         doCallRealMethod().when(left).setLeft(Mockito.any());
         doCallRealMethod().when(left).setRight(Mockito.any());
-        Mockito.when(left_left.getData()).thenReturn("Serge");
 
         tree.add(left_left);
 
         assertNotNull(root.getLeft().getLeft());
-        assertEquals("Serge", root.getLeft().getLeft().getData());
+        assertEquals(1, root.getLeft().getLeft().getData());
     }
 
     @Test
@@ -115,7 +113,7 @@ public class TestBinaryTree {
         Mockito.when(root.getLeft()).thenReturn(left);
         Mockito.when(root.getRight()).thenReturn(right);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
 
         assertEquals("root", tree.getParent(left).getData());
@@ -149,7 +147,7 @@ public class TestBinaryTree {
 
         Mockito.when(root.hasChildren()).thenReturn(Boolean.TRUE);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.exists(Mockito.any())).thenCallRealMethod();
 
         assertTrue(tree.exists(right));
@@ -176,7 +174,7 @@ public class TestBinaryTree {
 
         Mockito.when(right.hasChildren()).thenReturn(Boolean.FALSE);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
 
         assertEquals("Pat", tree.findMin(root).getData());
@@ -203,14 +201,14 @@ public class TestBinaryTree {
 
         Mockito.when(left.hasChildren()).thenReturn(Boolean.FALSE);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.findMax(Mockito.any())).thenCallRealMethod();
 
         assertEquals("Pat", tree.findMax(root).getData());
     }
 
     @Test
-    public void testRemove_root() {
+    public void testdelete_root() {
         BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
         BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(1));
         BinaryNode right = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
@@ -265,19 +263,19 @@ public class TestBinaryTree {
         Mockito.when(right.compareTo(1)).thenReturn(1);
         Mockito.when(right.compareTo(2)).thenReturn(1);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
-        Mockito.when(tree.remove(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.delete(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
-        assertTrue(tree.remove(root));
+        assertTrue(tree.delete(root));
         Mockito.verify(root, Mockito.times(1)).setRight(null);
         Mockito.verify(right, Mockito.times(1)).setLeft(left);
     }
 
     @Test
-    public void testRemove_left() {
+    public void testdelete_left() {
         BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
         BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(1));
         BinaryNode right = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
@@ -317,9 +315,9 @@ public class TestBinaryTree {
         Mockito.when(right.compareTo(1)).thenReturn(1);
         Mockito.when(right.compareTo(2)).thenReturn(1);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
-        Mockito.when(tree.remove(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.delete(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
@@ -332,14 +330,14 @@ public class TestBinaryTree {
         doCallRealMethod().when(right).setLeft(Mockito.any());
         doCallRealMethod().when(right).setRight(Mockito.any());
 
-        assertTrue(tree.remove(left));
+        assertTrue(tree.delete(left));
         assertEquals(2, root.getData());
 
         Mockito.verify(root, Mockito.times(1)).setLeft(null);
     }
 
     @Test
-    public void testRemove_right() {
+    public void testdelete_right() {
         BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
         BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(1));
         BinaryNode right = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
@@ -379,9 +377,9 @@ public class TestBinaryTree {
         Mockito.when(right.compareTo(1)).thenReturn(1);
         Mockito.when(right.compareTo(2)).thenReturn(1);
 
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
-        Mockito.when(tree.remove(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.delete(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
@@ -394,14 +392,14 @@ public class TestBinaryTree {
         doCallRealMethod().when(right).setLeft(Mockito.any());
         doCallRealMethod().when(right).setRight(Mockito.any());
 
-        assertTrue(tree.remove(right));
+        assertTrue(tree.delete(right));
         assertEquals(2, root.getData());
 
         Mockito.verify(root, Mockito.times(1)).setRight(null);
     }
 
     @Test
-    public void testRemove_sub_child() {
+    public void testdelete_sub_child() {
         // Create nodes
         BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
         BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
@@ -492,16 +490,16 @@ public class TestBinaryTree {
         Mockito.when(left_left.compareTo(1)).thenReturn(0);
 
         // Create the binary tree
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
 
         // Make sure all necessary methods are being invoked
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
-        Mockito.when(tree.remove(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.delete(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
         // Make sure it was successfull
-        assertTrue(tree.remove(left));
+        assertTrue(tree.delete(left));
         assertEquals(3, root.getData());
         assertEquals(1, root.getLeft().getData());
 
@@ -509,7 +507,7 @@ public class TestBinaryTree {
     }
 
     @Test
-    public void testRemove_invalid_node() {
+    public void testdelete_invalid_node() {
         // Create nodes
         BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
         BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
@@ -574,16 +572,16 @@ public class TestBinaryTree {
         Mockito.when(right.compareTo(3)).thenReturn(1);
 
         // Create the binary tree
-        BinaryTree<String> tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
 
         // Make sure all necessary methods are being invoked
         Mockito.when(tree.findMin(Mockito.any())).thenCallRealMethod();
-        Mockito.when(tree.remove(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.delete(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getParent(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
         // Make sure it was successfull
-        assertTrue(!tree.remove(left));
+        assertTrue(!tree.delete(left));
 
     }
 
