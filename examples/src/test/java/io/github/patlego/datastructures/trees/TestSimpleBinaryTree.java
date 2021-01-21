@@ -26,6 +26,7 @@ public class TestSimpleBinaryTree {
     @Test
     public void deleteNode() {
         IntegerBinaryNode value_1 = new IntegerBinaryNode(1);
+        IntegerBinaryNode value_neg_1 = new IntegerBinaryNode(-1);
         IntegerBinaryNode value_2 = new IntegerBinaryNode(2);
         IntegerBinaryNode value_3 = new IntegerBinaryNode(3);
 
@@ -39,9 +40,13 @@ public class TestSimpleBinaryTree {
         tree.add(value_3);
         assertEquals(3, root.getRight().getData());
 
+        tree.add(value_neg_1);
+        assertEquals(-1, root.getLeft().getLeft().getData());
+
         tree.delete(value_2);
         assertEquals(3, tree.getRoot().getData());
         assertEquals(1, ((BinaryNode)tree.getRoot()).getLeft().getData());
+        assertEquals(-1, ((BinaryNode)tree.getRoot()).getLeft().getLeft().getData());
         assertEquals(null, ((BinaryNode)tree.getRoot()).getRight());
     }
     
