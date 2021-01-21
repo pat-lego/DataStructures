@@ -3,6 +3,7 @@ package io.github.patlego.datastructures.trees;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -58,9 +59,10 @@ public abstract class BinaryTree<T> implements Tree {
 
     public @Nonnull Boolean remove(@Nonnull BinaryNode<T> node) {
         if (node.hasChildren()) {
+            // Node has 2 children
             if (node.getLeft() != null && node.getRight() != null) {
                 BinaryNode min = findMin(node.getRight());
-          
+
                 Boolean removed = remove(min);
                 BinaryNode parent = (BinaryNode) getParent(node);
 
@@ -92,8 +94,7 @@ public abstract class BinaryTree<T> implements Tree {
                 }
             }
 
-            // Either node only has one child
-
+            // Node only has one child
             if (node.getLeft() != null) {
                 BinaryNode parent = (BinaryNode) getParent(node);
                 if (parent.getLeft().compareTo(node) == 0) {
@@ -120,15 +121,18 @@ public abstract class BinaryTree<T> implements Tree {
 
         } else {
             BinaryNode parent = (BinaryNode) getParent(node);
-             if (parent.getLeft().compareTo(node) == 0) {
-                parent.setLeft(null);
-                return Boolean.TRUE;
+            if (parent != null) {
+                if (parent.getLeft().compareTo(node) == 0) {
+                    parent.setLeft(null);
+                    return Boolean.TRUE;
+                }
+
+                if (parent.getRight().compareTo(node) == 0) {
+                    parent.setRight(null);
+                    return Boolean.TRUE;
+                }
             }
 
-            if (parent.getRight().compareTo(node) == 0) {
-                parent.setRight(null);
-                return Boolean.TRUE;
-            }
         }
 
         return Boolean.FALSE;
@@ -235,11 +239,11 @@ public abstract class BinaryTree<T> implements Tree {
         Node<T> parent = null;
         if (root.hasChildren()) {
             if (root.getLeft() != null) {
-                parent = _getParent(data, root.getLeft(), root);
+                parent = Optional.ofNullable(_getParent(data, root.getLeft(), root)).orElse(parent);
             }
 
             if (root.getRight() != null) {
-                parent = _getParent(data, root.getRight(), root);
+                parent = Optional.ofNullable(_getParent(data, root.getRight(), root)).orElse(parent);
             }
         }
 
