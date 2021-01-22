@@ -16,14 +16,43 @@ public abstract class AVLNode<T> extends BinaryNode<T> {
         }
 
         if (this.getLeft() != null) {
-            left = ((AVLNode) this.getLeft()).getHeight() + 1;
+            left = _getHeight((AVLNode) this.getLeft(), 1);
         }
 
         if (this.getRight() != null) {
-            right = ((AVLNode) this.getRight()).getHeight() + 1;
+            right = _getHeight((AVLNode) this.getRight(), 1);
         }
 
         return (left - right);
     }
-    
+
+    private Integer _getHeight(AVLNode node, Integer height) {
+
+        Integer left = 0;
+        Integer right = 0;
+
+        if (node.getLeft() != null) {
+            left = _getHeight((AVLNode) node.getLeft(), height + 1);
+        }
+
+        if (node.getRight() != null) {
+            right = _getHeight((AVLNode) node.getRight(), height + 1);
+        }
+
+        if (left == 0 && right == 0) {
+            return height;
+        }
+
+        if (left > right) {
+            return left;
+        }
+
+        if (right > left) {
+            return right;
+        }
+
+        return left;
+
+    }
+
 }

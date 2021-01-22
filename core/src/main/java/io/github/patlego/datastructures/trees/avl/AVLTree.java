@@ -32,7 +32,7 @@ public abstract class AVLTree extends BinaryTree {
     }
 
     private Boolean _isOffBalance(AVLNode node) {
-        
+
         if (isNodeOffBalance(node)) {
             return Boolean.TRUE;
         }
@@ -62,30 +62,24 @@ public abstract class AVLTree extends BinaryTree {
 
     protected AVLNode getOffBalanceNode() {
         AVLNode root = (AVLNode) this.getRoot();
-        return this._getOffBalanceNode(root);
+        return this._getOffBalanceNode(root, null);
     }
 
-    private AVLNode _getOffBalanceNode(AVLNode node) {
+    private AVLNode _getOffBalanceNode(AVLNode node, AVLNode offbalance) {
         if (isNodeOffBalance(node)) {
-            return node;
+            if (node.getLeft() != null) {
+                return _getOffBalanceNode((AVLNode) node.getLeft(), node);
+            }
+
+            if (node.getRight() != null) {
+                return _getOffBalanceNode((AVLNode) node.getRight(), node);
+            }
         }
 
-        if (node.getLeft() != null) {
-            return _getOffBalanceNode((AVLNode) node.getLeft());
-        }
-
-        if (node.getRight() != null) {
-            return _getOffBalanceNode((AVLNode) node.getRight());
-        }
-
-        return null;
+        return offbalance;
     }
 
     protected void rebalance() {
-        while(isOffBalance()) {
-            AVLNode offbalance = getOffBalanceNode();
-            balance(offbalance);
-        }
     }
 
     protected void balance(AVLNode offbalance) {
@@ -107,5 +101,5 @@ public abstract class AVLTree extends BinaryTree {
     protected void rl(AVLNode offbalance) {
 
     }
-    
+
 }
