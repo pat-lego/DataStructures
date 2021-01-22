@@ -1,4 +1,4 @@
-package io.github.patlego.datastructures.lists;
+package io.github.patlego.datastructures.lists.linked;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doCallRealMethod;
@@ -6,6 +6,8 @@ import static org.mockito.Mockito.withSettings;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import io.github.patlego.datastructures.lists.Item;
 
 public class TestCircularList {
 
@@ -159,15 +161,6 @@ public class TestCircularList {
             return 0;
         }
 
-        @Override
-        public Object clone() throws CloneNotSupportedException {
-            TestLinkedItem_1 clone = new TestLinkedItem_1(this.getData());
-            clone.setPrevious(this.previous());
-            clone.setNext(this.next());
-
-            return clone;
-        }
-
     }
 
     private class TestLinkedItem_2 extends LinkedItem<Integer> {
@@ -188,15 +181,6 @@ public class TestCircularList {
             }
 
             return 0;
-        }
-
-        @Override
-        public Object clone() throws CloneNotSupportedException {
-            TestLinkedItem_2 clone = new TestLinkedItem_2(this.getData());
-            clone.setPrevious(this.previous());
-            clone.setNext(this.next());
-
-            return clone;
         }
 
     }

@@ -1,7 +1,10 @@
-package io.github.patlego.datastructures.lists;
+package io.github.patlego.datastructures.lists.linked;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import io.github.patlego.datastructures.lists.Item;
+import io.github.patlego.datastructures.lists.List;
 
 public abstract class CircularList implements List {
 

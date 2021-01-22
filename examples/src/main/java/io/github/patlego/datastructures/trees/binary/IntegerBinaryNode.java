@@ -1,4 +1,4 @@
-package io.github.patlego.datastructures.trees;
+package io.github.patlego.datastructures.trees.binary;
 
 public class IntegerBinaryNode extends BinaryNode<Integer> {
 

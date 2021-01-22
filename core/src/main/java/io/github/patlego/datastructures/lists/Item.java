@@ -2,7 +2,7 @@ package io.github.patlego.datastructures.lists;
 
 import javax.annotation.Nonnull;
 
-public interface Item<T> extends Comparable<T>, Cloneable {
+public interface Item<T> extends Comparable<T> {
 
     public @Nonnull T getData();
 
@@ -17,6 +17,4 @@ public interface Item<T> extends Comparable<T>, Cloneable {
     public void setPrevious(@Nonnull Item item);
 
     public void setNext(@Nonnull Item item);
-
-    public Object clone() throws CloneNotSupportedException;
 }

@@ -1,7 +1,9 @@
-package io.github.patlego.datastructures.trees;
+package io.github.patlego.datastructures.trees.binary;
 
 import java.util.Arrays;
 import java.util.List;
+
+import io.github.patlego.datastructures.trees.Node;
 
 public abstract class BinaryNode<T> implements Node<T> {
 

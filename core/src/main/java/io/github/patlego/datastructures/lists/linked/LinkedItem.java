@@ -1,6 +1,8 @@
-package io.github.patlego.datastructures.lists;
+package io.github.patlego.datastructures.lists.linked;
 
-public abstract class LinkedItem<T> implements Item<T>, Cloneable {
+import io.github.patlego.datastructures.lists.Item;
+
+public abstract class LinkedItem<T> implements Item<T> {
 
     private T data;
     private Item<T> next;
@@ -55,6 +57,4 @@ public abstract class LinkedItem<T> implements Item<T>, Cloneable {
     public void setNext(Item item) {
         this.next = item;
     }
-
-    public abstract Object clone() throws CloneNotSupportedException;
 }

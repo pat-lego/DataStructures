@@ -1,4 +1,4 @@
-package io.github.patlego.datastructures.trees;
+package io.github.patlego.datastructures.trees.binary;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -8,6 +8,9 @@ import java.util.Optional;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import io.github.patlego.datastructures.trees.Node;
+import io.github.patlego.datastructures.trees.Tree;
 
 public abstract class BinaryTree implements Tree {
 
