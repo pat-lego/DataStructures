@@ -83,8 +83,29 @@ public abstract class AVLTree extends BinaryTree {
 
     protected void rebalance() {
         while(isOffBalance()) {
-
+            AVLNode offbalance = getOffBalanceNode();
+            balance(offbalance);
         }
+    }
+
+    protected void balance(AVLNode offbalance) {
+
+    }
+
+    protected void ll(AVLNode offbalance) {
+
+    }
+
+    protected void rr(AVLNode offbalance) {
+
+    }
+
+    protected void lr(AVLNode offbalance) {
+
+    }
+
+    protected void rl(AVLNode offbalance) {
+
     }
     
 }
