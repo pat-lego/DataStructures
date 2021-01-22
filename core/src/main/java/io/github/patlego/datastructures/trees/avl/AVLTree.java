@@ -1,7 +1,10 @@
 package io.github.patlego.datastructures.trees.avl;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.IntSupplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,33 +75,35 @@ public abstract class AVLTree extends BinaryTree {
 
     protected @Nullable AVLNode getOffBalanceNode() {
         AVLNode node = (AVLNode) this.getRoot();
-        if (this.isNodeOffBalance(node)) {
-            return _getOffBalanceNode(node, node, new HashSet<AVLNode>() );
-        }
-
+        Set<AVLNode> offBalanced = new HashSet<AVLNode>();
+        _getOffBalanceNode(node, offBalanced);
+        //TODO find the deepest node in the tree that is off balanced
         return null;
     }
 
-    protected @Nullable AVLNode _getOffBalanceNode(AVLNode node, AVLNode offbalance, Set<AVLNode> previous) {
-        // We passed the last node that was offbalanced
-        if (!this.isNodeOffBalance(node)) {
-            AVLNode invalidHeight = (AVLNode) this.getParent(node);
-            if (node.compareTo(invalidHeight.getData()) != 0 && !previous.contains(invalidHeight)) {
-                previous.add(offbalance);
-                offbalance = invalidHeight;
-                return offbalance;
+    /**
+     * This function will find all of the offBalanced nodes and return them in a list
+     * @param node
+     * @return
+     */
+    private @Nullable Set<AVLNode> _getOffBalanceNode(AVLNode node, Set<AVLNode> offBalanced) {
+        if (this.isNodeOffBalance(node)) {
+            offBalanced.add(node);
+        }
+        
+        if (node.hasChildren()) {
+            if (node.getLeft() != null) {
+                offBalanced.addAll(_getOffBalanceNode((AVLNode) node.getLeft(), offBalanced));
+            }
+
+            if (node.getRight() != null) {
+                offBalanced.addAll(_getOffBalanceNode((AVLNode) node.getRight(), offBalanced));
+
             }
         }
 
-        if (node.getLeft() != null) {
-            offbalance = _getOffBalanceNode((AVLNode) node.getLeft(), offbalance, previous);
-        }
+        return offBalanced;
 
-        if (node.getRight() != null) {
-            offbalance = _getOffBalanceNode((AVLNode) node.getRight(), offbalance, previous);
-        }
-
-        return offbalance;
     }
 
     protected void rebalance() {
