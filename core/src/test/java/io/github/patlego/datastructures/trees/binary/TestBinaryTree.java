@@ -585,4 +585,55 @@ public class TestBinaryTree {
 
     }
 
+    @Test
+    public void getNode() {
+        // Create nodes
+        BinaryNode root = Mockito.mock(BinaryNode.class, withSettings().useConstructor(3));
+        BinaryNode left = Mockito.mock(BinaryNode.class, withSettings().useConstructor(2));
+        BinaryNode right = Mockito.mock(BinaryNode.class, withSettings().useConstructor(4));
+
+        // Call real methods when invoked for root
+        doCallRealMethod().when(root).setLeft(Mockito.any());
+        doCallRealMethod().when(root).setRight(Mockito.any());
+        Mockito.when(root.getLeft()).thenCallRealMethod();
+        Mockito.when(root.getRight()).thenCallRealMethod();
+
+        // Call real methods when invoked for left
+        doCallRealMethod().when(left).setLeft(Mockito.any());
+        doCallRealMethod().when(left).setRight(Mockito.any());
+        Mockito.when(left.getLeft()).thenCallRealMethod();
+        Mockito.when(left.getRight()).thenCallRealMethod();
+
+        // Call real methods when invoked for right
+        doCallRealMethod().when(right).setLeft(Mockito.any());
+        doCallRealMethod().when(right).setRight(Mockito.any());
+        Mockito.when(right.getRight()).thenCallRealMethod();
+        Mockito.when(right.getLeft()).thenCallRealMethod();
+
+        root.setLeft(left);
+        root.setRight(right);
+
+        Mockito.when(root.compareTo(3)).thenReturn(0);
+        Mockito.when(root.compareTo(2)).thenReturn(1);
+        Mockito.when(root.compareTo(4)).thenReturn(-1);
+
+        Mockito.when(left.compareTo(3)).thenReturn(-1);
+        Mockito.when(left.compareTo(2)).thenReturn(0);
+        Mockito.when(left.compareTo(4)).thenReturn(-1);
+
+        Mockito.when(right.compareTo(3)).thenReturn(1);
+        Mockito.when(right.compareTo(2)).thenReturn(1);
+        Mockito.when(right.compareTo(4)).thenReturn(0);
+
+        // Create the binary tree
+        BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
+        Mockito.when(tree.get(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.exists(Mockito.any())).thenCallRealMethod();
+        Mockito.when(tree.getRoot()).thenCallRealMethod();
+
+        assertEquals(left.hashCode(),tree.get(left).hashCode());
+        assertEquals(right.hashCode(),tree.get(right).hashCode());
+        assertEquals(root.hashCode(),tree.get(root).hashCode());
+    }
+
 }
