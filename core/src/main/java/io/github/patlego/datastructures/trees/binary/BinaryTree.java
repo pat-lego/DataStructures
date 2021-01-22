@@ -24,7 +24,7 @@ public abstract class BinaryTree implements Tree {
         this.root = node;
     }
 
-    public @Nonnull Boolean add(@Nonnull BinaryNode node) {
+    protected @Nonnull Boolean add(@Nonnull BinaryNode node) {
         BinaryNode parent = this._add(node, this.root);
 
         if (parent.compareTo(node.getData()) < 0) {
@@ -60,7 +60,7 @@ public abstract class BinaryTree implements Tree {
         return root;
     }
 
-    public @Nonnull Boolean delete(@Nonnull BinaryNode node) {
+    protected @Nonnull Boolean delete(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             // Node has 2 children
             if (node.getLeft() != null && node.getRight() != null) {
@@ -142,7 +142,7 @@ public abstract class BinaryTree implements Tree {
         return Boolean.FALSE;
     }
 
-    public @Nonnull BinaryNode findMin(@Nonnull BinaryNode node) {
+    protected @Nonnull BinaryNode findMin(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             if (node.getLeft() != null) {
                 return findMin(node.getLeft());
@@ -151,7 +151,7 @@ public abstract class BinaryTree implements Tree {
         return node;
     }
 
-    public @Nonnull BinaryNode findMax(@Nonnull BinaryNode node) {
+    protected @Nonnull BinaryNode findMax(@Nonnull BinaryNode node) {
         if (node.hasChildren()) {
             if (node.getRight() != null) {
                 return findMax(node.getRight());
@@ -160,7 +160,7 @@ public abstract class BinaryTree implements Tree {
         return node;
     }
 
-    public @Nonnull Boolean exists(@Nonnull BinaryNode node) {
+    protected @Nonnull Boolean exists(@Nonnull BinaryNode node) {
         return _exists(node, this.root);
     }
 
@@ -184,7 +184,7 @@ public abstract class BinaryTree implements Tree {
         return (left || right);
     }
 
-    public @Nonnull List<BinaryNode> getAllNodes() {
+    protected @Nonnull List<BinaryNode> getAllNodes() {
         return this._getAllNodes(this.root);
     }
 
