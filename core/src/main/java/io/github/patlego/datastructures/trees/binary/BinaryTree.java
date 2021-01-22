@@ -24,7 +24,11 @@ public abstract class BinaryTree implements Tree {
         this.root = node;
     }
 
-    protected @Nonnull Boolean add(@Nonnull BinaryNode node) {
+    protected @Nonnull Boolean add(@Nullable BinaryNode node) {
+        if (node == null) {
+            return Boolean.FALSE;
+        }
+
         BinaryNode parent = this._add(node, this.root);
 
         if (parent.compareTo(node.getData()) < 0) {
@@ -60,7 +64,10 @@ public abstract class BinaryTree implements Tree {
         return root;
     }
 
-    protected @Nonnull Boolean delete(@Nonnull BinaryNode node) {
+    protected @Nonnull Boolean delete(@Nullable BinaryNode node) {
+        if (node == null) {
+            return Boolean.FALSE;
+        }
         if (node.hasChildren()) {
             // Node has 2 children
             if (node.getLeft() != null && node.getRight() != null) {
@@ -254,7 +261,7 @@ public abstract class BinaryTree implements Tree {
 
     @Override
     public <T> @Nonnull Boolean hasParent(@Nonnull Node<T> node) {
-        return isRoot(node);
+        return !isRoot(node);
     }
 
     @Override
