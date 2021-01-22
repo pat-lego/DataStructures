@@ -32,11 +32,8 @@ public abstract class AVLTree extends BinaryTree {
     }
 
     private Boolean _isOffBalance(AVLNode node) {
-        if (node.getHeight() > 1) {
-            return Boolean.TRUE;
-        }
-
-        if (node.getHeight() < -1) {
+        
+        if (isNodeOffBalance(node)) {
             return Boolean.TRUE;
         }
 
@@ -51,8 +48,43 @@ public abstract class AVLTree extends BinaryTree {
         return Boolean.FALSE;
     }
 
+    protected Boolean isNodeOffBalance(AVLNode node) {
+        if (node.getHeight() > 1) {
+            return Boolean.TRUE;
+        }
+
+        if (node.getHeight() < -1) {
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
+
+    protected AVLNode getOffBalanceNode() {
+        AVLNode root = (AVLNode) this.getRoot();
+        return this._getOffBalanceNode(root);
+    }
+
+    private AVLNode _getOffBalanceNode(AVLNode node) {
+        if (isNodeOffBalance(node)) {
+            return node;
+        }
+
+        if (node.getLeft() != null) {
+            return _getOffBalanceNode((AVLNode) node.getLeft());
+        }
+
+        if (node.getRight() != null) {
+            return _getOffBalanceNode((AVLNode) node.getRight());
+        }
+
+        return null;
+    }
+
     protected void rebalance() {
-        // TODO needs to be implemented
+        while(isOffBalance()) {
+
+        }
     }
     
 }
