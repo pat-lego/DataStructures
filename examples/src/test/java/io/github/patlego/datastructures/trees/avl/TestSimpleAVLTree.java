@@ -50,7 +50,7 @@ public class TestSimpleAVLTree {
     }
 
     @Test
-    public void testAVL_LL_layered() {
+    public void testAVL_LL_layered_1() {
         SimpleAVLNode avl_6 = new SimpleAVLNode(6);
         SimpleAVLNode avl_8 = new SimpleAVLNode(8);
         SimpleAVLNode avl_7 = new SimpleAVLNode(7);
@@ -77,6 +77,37 @@ public class TestSimpleAVLTree {
         assertEquals(9, ((AVLNode) tree.getRoot()).getRight().getRight().getData());
         assertEquals(3, ((AVLNode) tree.getRoot()).getLeft().getRight().getData());
         assertEquals(1, ((AVLNode) tree.getRoot()).getLeft().getLeft().getData());
+        
+    }
+
+    @Test
+    public void testAVL_LL_layered_2() {
+        SimpleAVLNode avl_16 = new SimpleAVLNode(16);
+        SimpleAVLNode avl_18 = new SimpleAVLNode(18);
+        SimpleAVLNode avl_3 = new SimpleAVLNode(3);
+        SimpleAVLNode avl_17 = new SimpleAVLNode(17);
+        SimpleAVLNode avl_19 = new SimpleAVLNode(19);
+        SimpleAVLNode avl_2 = new SimpleAVLNode(2);
+        SimpleAVLNode avl_13 = new SimpleAVLNode(13);
+        SimpleAVLNode avl_14 = new SimpleAVLNode(14);
+        SimpleAVLNode avl_15 = new SimpleAVLNode(15);
+
+        IntegerAVLTree tree = new IntegerAVLTree(avl_16);
+        assertTrue(tree.add(avl_18));
+        assertTrue(tree.add(avl_3));
+        assertTrue(tree.add(avl_17));
+        assertTrue(tree.add(avl_19));
+        assertTrue(tree.add(avl_2));
+        assertTrue(tree.add(avl_13));
+        assertTrue(tree.add(avl_14));
+        assertTrue(tree.add(avl_15));
+
+        assertEquals(16, tree.getRoot().getData());
+        assertEquals(3, ((AVLNode) tree.getRoot()).getLeft().getData());
+        assertEquals(18, ((AVLNode) tree.getRoot()).getRight().getData());
+        assertEquals(14, ((AVLNode) tree.getRoot()).getLeft().getRight().getData());
+        assertEquals(15, ((AVLNode) tree.getRoot()).getLeft().getRight().getRight().getData());
+        assertEquals(13, ((AVLNode) tree.getRoot()).getLeft().getRight().getLeft().getData());
         
     }
 
