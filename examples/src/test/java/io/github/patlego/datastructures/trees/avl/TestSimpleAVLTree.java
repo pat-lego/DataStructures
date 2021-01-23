@@ -194,6 +194,30 @@ public class TestSimpleAVLTree {
     }
 
     @Test
+    public void testAVL_LR_delete() {
+        SimpleAVLNode avl_10 = new SimpleAVLNode(10);
+        SimpleAVLNode avl_7 = new SimpleAVLNode(7);
+        SimpleAVLNode avl_16 = new SimpleAVLNode(16);
+        SimpleAVLNode avl_4 = new SimpleAVLNode(4);
+        SimpleAVLNode avl_12 = new SimpleAVLNode(12);
+        SimpleAVLNode avl_19 = new SimpleAVLNode(19);
+        SimpleAVLNode avl_17 = new SimpleAVLNode(17);
+        
+        IntegerAVLTree tree = new IntegerAVLTree(avl_10);
+        assertTrue(tree.add(avl_7));
+        assertTrue(tree.add(avl_16));
+        assertTrue(tree.add(avl_4));
+        assertTrue(tree.add(avl_12));
+        assertTrue(tree.add(avl_19));
+        assertTrue(tree.add(avl_17));
+
+        assertEquals(10, tree.getRoot().getData());
+        tree.delete(avl_12);
+        assertEquals(17, ((AVLNode) tree.getRoot()).getRight().getData());
+        assertEquals(16, ((AVLNode) tree.getRoot()).getRight().getLeft().getData());
+    }
+
+    @Test
     public void testAVL_LR_right() {
         SimpleAVLNode avl_10 = new SimpleAVLNode(10);
         SimpleAVLNode avl_6 = new SimpleAVLNode(6);

@@ -46,15 +46,17 @@ public abstract class AVLTree extends BinaryTree {
             return Boolean.TRUE;
         }
 
+        Boolean left = Boolean.FALSE;
+        Boolean right = Boolean.FALSE;
         if (node.getLeft() != null) {
-            return _isOffBalance((AVLNode) node.getLeft());
+            left =  _isOffBalance((AVLNode) node.getLeft());
         }
 
         if (node.getRight() != null) {
-            return _isOffBalance((AVLNode) node.getRight());
+            right = _isOffBalance((AVLNode) node.getRight());
         }
 
-        return Boolean.FALSE;
+        return left || right;
     }
 
     protected @Nonnull Boolean isNodeOffBalance(@Nullable AVLNode node) {
