@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.IntSupplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -88,9 +86,7 @@ public abstract class AVLTree extends BinaryTree {
         for (AVLNode offBalance : offBalanced) {
             Integer index = _getNodeIndex((AVLNode) this.getRoot(), offBalance, 0);
 
-            if (index != null) {
-                offBalanceIndex.add(index);
-            }
+            offBalanceIndex.add(index);
         }
 
         Iterator<AVLNode> offBalancedIterator = offBalanced.iterator();
@@ -99,8 +95,9 @@ public abstract class AVLTree extends BinaryTree {
 
         for (int i = 0; i < offBalanceIndex.size() && offBalancedIterator.hasNext(); i++) {
             AVLNode temp = offBalancedIterator.next();
-            if (deepest > offBalanceIndex.get(0)) {
+            if (deepest < offBalanceIndex.get(i)) {
                 minBalanceNode = temp;
+                deepest = offBalanceIndex.get(i);
             }
         }
 
@@ -114,15 +111,17 @@ public abstract class AVLTree extends BinaryTree {
 
         if (root.hasChildren()) {
             if (root.getLeft() != null) {
-                return _getNodeIndex((AVLNode) root.getLeft(), node, index + 1);
+                Integer result = _getNodeIndex((AVLNode) root.getLeft(), node, index + 1);
+                return result;
             }
 
             if (root.getRight() != null) {
-                return _getNodeIndex((AVLNode) root.getRight(), node, index + 1);
+                Integer result = _getNodeIndex((AVLNode) root.getRight(), node, index + 1);
+                return result;
             }
         }
 
-        return null;
+        return index;
     }
 
     /**
