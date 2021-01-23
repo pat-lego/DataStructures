@@ -1,6 +1,8 @@
 package io.github.patlego.datastructures.trees.avl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -77,12 +79,56 @@ public abstract class AVLTree extends BinaryTree {
         AVLNode node = (AVLNode) this.getRoot();
         Set<AVLNode> offBalanced = new HashSet<AVLNode>();
         _getOffBalanceNode(node, offBalanced);
-        //TODO find the deepest node in the tree that is off balanced, use the list of off balanced nodes to find it
+
+        if (offBalanced.isEmpty()) {
+            return null;
+        }
+
+        List<Integer> offBalanceIndex = new ArrayList<Integer>();
+        for (AVLNode offBalance : offBalanced) {
+            Integer index = _getNodeIndex((AVLNode) this.getRoot(), offBalance, 0);
+
+            if (index != null) {
+                offBalanceIndex.add(index);
+            }
+        }
+
+        Iterator<AVLNode> offBalancedIterator = offBalanced.iterator();
+        Integer deepest = offBalanceIndex.get(0);
+        AVLNode minBalanceNode = offBalanced.iterator().next();
+
+        for (int i = 0; i < offBalanceIndex.size() && offBalancedIterator.hasNext(); i++) {
+            AVLNode temp = offBalancedIterator.next();
+            if (deepest > offBalanceIndex.get(0)) {
+                minBalanceNode = temp;
+            }
+        }
+
+        return minBalanceNode;
+    }
+
+    private Integer _getNodeIndex(AVLNode root, AVLNode node, Integer index) {
+        if (root.compareTo(node.getData()) == 0) {
+            return index;
+        }
+
+        if (root.hasChildren()) {
+            if (root.getLeft() != null) {
+                return _getNodeIndex((AVLNode) root.getLeft(), node, index + 1);
+            }
+
+            if (root.getRight() != null) {
+                return _getNodeIndex((AVLNode) root.getRight(), node, index + 1);
+            }
+        }
+
         return null;
     }
 
     /**
-     * This function will find all of the offBalanced nodes and return them in a list
+     * This function will find all of the offBalanced nodes and return them in a
+     * list
+     * 
      * @param node
      * @return
      */
@@ -90,7 +136,7 @@ public abstract class AVLTree extends BinaryTree {
         if (this.isNodeOffBalance(node)) {
             offBalanced.add(node);
         }
-        
+
         if (node.hasChildren()) {
             if (node.getLeft() != null) {
                 offBalanced.addAll(_getOffBalanceNode((AVLNode) node.getLeft(), offBalanced));

@@ -68,13 +68,15 @@ public class TestSimpleAVLTree {
         assertTrue(tree.add(avl_9));
         assertTrue(tree.add(avl_2));
         assertTrue(tree.add(avl_1));
-        // assertTrue(tree.add(avl_neg_1));
+        assertTrue(tree.add(avl_neg_1));
 
-        //assertEquals(6, tree.getRoot().getData());
-        // assertEquals(2, ((AVLNode) tree.getRoot()).getLeft().getData());
-        // assertEquals(8, ((AVLNode) tree.getRoot()).getRight().getData());
-        // assertEquals(3, ((AVLNode) tree.getRoot()).getLeft().getRight().getData());
-        // assertEquals(1, ((AVLNode) tree.getRoot()).getLeft().getLeft().getData());
+        assertEquals(6, tree.getRoot().getData());
+        assertEquals(2, ((AVLNode) tree.getRoot()).getLeft().getData());
+        assertEquals(8, ((AVLNode) tree.getRoot()).getRight().getData());
+        assertEquals(7, ((AVLNode) tree.getRoot()).getRight().getLeft().getData());
+        assertEquals(9, ((AVLNode) tree.getRoot()).getRight().getRight().getData());
+        assertEquals(3, ((AVLNode) tree.getRoot()).getLeft().getRight().getData());
+        assertEquals(1, ((AVLNode) tree.getRoot()).getLeft().getLeft().getData());
         
     }
 
