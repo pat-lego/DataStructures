@@ -210,10 +210,69 @@ public abstract class AVLTree extends BinaryTree {
     }
 
     protected void lr(AVLNode offBalance) {
+        if (this.isRoot(offBalance)) {
+            AVLNode newRoot = (AVLNode) offBalance.getLeft().getRight();
+            newRoot.setLeft(offBalance.getLeft());
+            root.getLeft().setRight(null);
 
+            newRoot.setRight(offBalance);
+            root.setLeft(null);
+
+            root = newRoot;
+            return;
+        }
+
+        AVLNode parent = (AVLNode) this.getParent(offBalance);
+        if (parent.getLeft().compareTo(offBalance.getData()) == 0) {
+            parent.setLeft(offBalance.getLeft().getRight());
+            offBalance.getLeft().setRight(null);
+
+            parent.getLeft().setRight(offBalance);
+            parent.getLeft().setLeft(offBalance.getLeft());
+            offBalance.setLeft(null);
+        }
+
+        if (parent.getRight().compareTo(offBalance.getData()) == 0) {
+            parent.setRight(offBalance.getLeft().getRight());
+            offBalance.getLeft().setRight(null);
+
+            parent.getRight().setRight(offBalance);
+            parent.getRight().setLeft(offBalance.getLeft());
+            offBalance.setLeft(null);
+        }
     }
 
     protected void rl(AVLNode offBalance) {
+        if (this.isRoot(offBalance)) {
+            AVLNode newRoot = (AVLNode) offBalance.getRight().getLeft();
+            newRoot.setRight(offBalance.getRight());
+            root.getRight().setLeft(null);
+
+            newRoot.setLeft(offBalance);
+            root.setRight(null);
+
+            root = newRoot;
+            return;
+        }
+
+        AVLNode parent = (AVLNode) this.getParent(offBalance);
+        if (parent.getLeft().compareTo(offBalance.getData()) == 0) {
+            parent.setLeft(offBalance.getRight().getLeft());
+            offBalance.getRight().setLeft(null);
+
+            parent.getLeft().setLeft(offBalance);
+            parent.getLeft().setRight(offBalance.getRight());
+            offBalance.setRight(null);
+        }
+
+        if (parent.getRight().compareTo(offBalance.getData()) == 0) {
+            parent.setRight(offBalance.getRight().getLeft());
+            offBalance.getRight().setLeft(null);
+
+            parent.getRight().setLeft(offBalance);
+            parent.getRight().setRight(offBalance.getRight());
+            offBalance.setRight(null);
+        }
 
     }
 
