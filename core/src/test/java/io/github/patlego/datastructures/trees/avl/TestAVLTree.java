@@ -78,11 +78,11 @@ public class TestAVLTree {
         Mockito.when(left_left_left.getRight()).thenCallRealMethod();
 
         AVLTree tree = Mockito.mock(AVLTree.class, withSettings().useConstructor(root));
-        Mockito.when(tree.getOffBalanceNode()).thenCallRealMethod();
+        Mockito.when(tree.getMinOffBalanceNode()).thenCallRealMethod();
         Mockito.when(tree.isNodeOffBalance(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
-        assertEquals(left.hashCode(), tree.getOffBalanceNode().hashCode());
+        assertEquals(left.hashCode(), tree.getMinOffBalanceNode().hashCode());
     }
 
     @Test

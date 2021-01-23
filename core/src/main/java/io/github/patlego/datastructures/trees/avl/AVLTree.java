@@ -73,11 +73,11 @@ public abstract class AVLTree extends BinaryTree {
         return Boolean.FALSE;
     }
 
-    protected @Nullable AVLNode getOffBalanceNode() {
+    protected @Nullable AVLNode getMinOffBalanceNode() {
         AVLNode node = (AVLNode) this.getRoot();
         Set<AVLNode> offBalanced = new HashSet<AVLNode>();
         _getOffBalanceNode(node, offBalanced);
-        //TODO find the deepest node in the tree that is off balanced
+        //TODO find the deepest node in the tree that is off balanced, use the list of off balanced nodes to find it
         return null;
     }
 
@@ -108,7 +108,7 @@ public abstract class AVLTree extends BinaryTree {
 
     protected void rebalance() {
         while (isOffBalance()) {
-            AVLNode offBalance = getOffBalanceNode();
+            AVLNode offBalance = getMinOffBalanceNode();
             balance(offBalance);
         }
     }
