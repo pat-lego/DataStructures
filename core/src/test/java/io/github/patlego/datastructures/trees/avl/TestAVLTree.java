@@ -48,8 +48,7 @@ public class TestAVLTree {
         AVLNode root = Mockito.mock(AVLNode.class);
         AVLNode left = Mockito.mock(AVLNode.class);
         AVLNode left_left = Mockito.mock(AVLNode.class);
-        AVLNode left_left_left = Mockito.mock(AVLNode.class);
-
+     
         Mockito.when(root.getHeight()).thenCallRealMethod();
         Mockito.when(root.getLeft()).thenCallRealMethod();
         Mockito.when(root.getRight()).thenCallRealMethod();
@@ -70,19 +69,12 @@ public class TestAVLTree {
 
         assertEquals(2, root.getHeight());
 
-        doCallRealMethod().when(left_left).setLeft(Mockito.any());
-        left_left.setLeft(left_left_left);
-
-        Mockito.when(left_left_left.getHeight()).thenCallRealMethod();
-        Mockito.when(left_left_left.getLeft()).thenCallRealMethod();
-        Mockito.when(left_left_left.getRight()).thenCallRealMethod();
-
         AVLTree tree = Mockito.mock(AVLTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.getMinOffBalanceNode()).thenCallRealMethod();
         Mockito.when(tree.isNodeOffBalance(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
-        assertEquals(left.hashCode(), tree.getMinOffBalanceNode().hashCode());
+        assertEquals(root.hashCode(), tree.getMinOffBalanceNode().hashCode());
     }
 
     @Test
