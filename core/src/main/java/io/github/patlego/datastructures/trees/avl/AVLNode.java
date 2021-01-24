@@ -1,5 +1,7 @@
 package io.github.patlego.datastructures.trees.avl;
 
+import javax.annotation.Nonnull;
+
 import io.github.patlego.datastructures.trees.binary.BinaryNode;
 
 public abstract class AVLNode<T> extends BinaryNode<T> {
@@ -8,7 +10,7 @@ public abstract class AVLNode<T> extends BinaryNode<T> {
         super(data);
     }
 
-    public Integer getHeight() {
+    public @Nonnull Integer getHeight() {
         Integer left = 0;
         Integer right = 0;
         if (this.getLeft() == null && this.getRight() == null) {
@@ -26,7 +28,7 @@ public abstract class AVLNode<T> extends BinaryNode<T> {
         return (left - right);
     }
 
-    private Integer _getHeight(AVLNode node, Integer height) {
+    private @Nonnull Integer _getHeight(@Nonnull AVLNode node, @Nonnull Integer height) {
 
         Integer left = 0;
         Integer right = 0;

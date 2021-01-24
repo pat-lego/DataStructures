@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -49,7 +50,7 @@ public abstract class AVLTree extends BinaryTree {
         Boolean left = Boolean.FALSE;
         Boolean right = Boolean.FALSE;
         if (node.getLeft() != null) {
-            left =  _isOffBalance((AVLNode) node.getLeft());
+            left = _isOffBalance((AVLNode) node.getLeft());
         }
 
         if (node.getRight() != null) {
@@ -106,7 +107,7 @@ public abstract class AVLTree extends BinaryTree {
         return minBalanceNode;
     }
 
-    private Integer _getNodeIndex(AVLNode root, AVLNode node, Integer index) {
+    private @Nonnull Integer _getNodeIndex(@Nonnull AVLNode root, @Nonnull AVLNode node, @Nonnegative @Nonnull Integer index) {
         if (root.compareTo(node.getData()) == 0) {
             return index;
         }
@@ -133,7 +134,7 @@ public abstract class AVLTree extends BinaryTree {
      * @param node
      * @return
      */
-    private @Nullable Set<AVLNode> _getOffBalanceNode(AVLNode node, Set<AVLNode> offBalanced) {
+    private @Nullable Set<AVLNode> _getOffBalanceNode(@Nonnull AVLNode node, @Nonnull Set<AVLNode> offBalanced) {
         if (this.isNodeOffBalance(node)) {
             offBalanced.add(node);
         }
@@ -160,7 +161,7 @@ public abstract class AVLTree extends BinaryTree {
         }
     }
 
-    protected void balance(AVLNode offBalance) {
+    protected void balance(@Nonnull AVLNode offBalance) {
         if (offBalance.getHeight() == 2) {
             if (((AVLNode) offBalance.getLeft()).getHeight() == 1) {
                 ll(offBalance);
@@ -178,7 +179,7 @@ public abstract class AVLTree extends BinaryTree {
         }
     }
 
-    protected void ll(AVLNode offBalance) {
+    protected void ll(@Nonnull AVLNode offBalance) {
         // Trying to remove root
         if (this.isRoot(offBalance)) {
             root = offBalance.getLeft();
@@ -194,7 +195,7 @@ public abstract class AVLTree extends BinaryTree {
         offBalance.setRight(null);
     }
 
-    protected void rr(AVLNode offBalance) {
+    protected void rr(@Nonnull AVLNode offBalance) {
         // Trying to remove root
         if (this.isRoot(offBalance)) {
             root = offBalance.getRight();
@@ -210,7 +211,7 @@ public abstract class AVLTree extends BinaryTree {
         offBalance.setRight(null);
     }
 
-    protected void lr(AVLNode offBalance) {
+    protected void lr(@Nonnull AVLNode offBalance) {
         if (this.isRoot(offBalance)) {
             AVLNode newRoot = (AVLNode) offBalance.getLeft().getRight();
             newRoot.setLeft(offBalance.getLeft());
@@ -243,7 +244,7 @@ public abstract class AVLTree extends BinaryTree {
         }
     }
 
-    protected void rl(AVLNode offBalance) {
+    protected void rl(@Nonnull AVLNode offBalance) {
         if (this.isRoot(offBalance)) {
             AVLNode newRoot = (AVLNode) offBalance.getRight().getLeft();
             newRoot.setRight(offBalance.getRight());
