@@ -625,15 +625,22 @@ public class TestBinaryTree {
         Mockito.when(right.compareTo(2)).thenReturn(1);
         Mockito.when(right.compareTo(4)).thenReturn(0);
 
+        Mockito.when(root.getData()).thenCallRealMethod();
+        Mockito.when(left.getData()).thenCallRealMethod();
+        Mockito.when(right.getData()).thenCallRealMethod();
+        Mockito.when(root.hasChildren()).thenCallRealMethod();
+        Mockito.when(left.hasChildren()).thenCallRealMethod();
+        Mockito.when(right.hasChildren()).thenCallRealMethod();
+
         // Create the binary tree
         BinaryTree tree = Mockito.mock(BinaryTree.class, withSettings().useConstructor(root));
         Mockito.when(tree.get(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.exists(Mockito.any())).thenCallRealMethod();
         Mockito.when(tree.getRoot()).thenCallRealMethod();
 
-        assertEquals(left.hashCode(),tree.get(left).hashCode());
-        assertEquals(right.hashCode(),tree.get(right).hashCode());
-        assertEquals(root.hashCode(),tree.get(root).hashCode());
+        assertEquals(left.hashCode(),tree.get(left.getData()).hashCode());
+        assertEquals(right.hashCode(),tree.get(right.getData()).hashCode());
+        assertEquals(root.hashCode(),tree.get(root.getData()).hashCode());
     }
 
 }

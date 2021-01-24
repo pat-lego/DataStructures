@@ -167,27 +167,33 @@ public abstract class BinaryTree implements Tree {
         return node;
     }
 
-    protected @Nullable BinaryNode get(@Nonnull BinaryNode node) {
-        if (exists(node)) {
-            BinaryNode root = (BinaryNode) this.getRoot();
-            return _get(root, node);
-        }
-
-        return null;
+    protected @Nullable <T> BinaryNode get(@Nonnull T node) {
+        BinaryNode root = (BinaryNode) this.getRoot();
+        return _get(root, node);
     }
 
-    private @Nullable BinaryNode _get(@Nonnull BinaryNode root, BinaryNode node) {
+    private @Nullable <T> BinaryNode _get(@Nonnull BinaryNode root, T node) {
         if (root.compareTo(node) == 0) {
-            return node;
+            return root;
         }
 
+        BinaryNode left = null;
+        BinaryNode right = null;
         if (root.hasChildren()) {
             if (root.getLeft() != null) {
-                return _get(root.getLeft(), node);
+                left = _get(root.getLeft(), node);
             }
 
             if (root.getRight() != null) {
-                return _get(root.getRight(), node);
+                right = _get(root.getRight(), node);
+            }
+
+            if (left != null) {
+                return left;
+            }
+
+            if (right != null) {
+                return right;
             }
         }
 
