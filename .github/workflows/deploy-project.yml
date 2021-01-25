@@ -1,11 +1,8 @@
-name: Build and Test
+name: Deploy Project
 on:
   push:
     branches:
-      - feature/*
-  pull_request:
-    branches:
-      - feature/*
+      - master
 jobs:
   build_and_test:
     name: Java Build and Test
@@ -25,4 +22,6 @@ jobs:
           java-version: "11"
           architecture: x64
       - name: Run Maven
-        run: mvn clean install
+        run: mvn --settings settings.xml deploy
+        env:
+          PACKAGES_DATASTRUCTURES_TOKEN: ${{secrets.PACKAGES_DATASTRUCTURES_TOKEN}}
