@@ -49,15 +49,11 @@ public abstract class BinaryTree implements Tree {
             if (root.compareTo(node.getData()) < 0) {
                 if (root.getRight() != null) {
                     return _add(node, root.getRight());
-                } else {
-                    return root;
                 }
             }
             if (root.compareTo(node.getData()) > 0) {
                 if (root.getLeft() != null) {
                     return _add(node, root.getLeft());
-                } else {
-                    return root;
                 }
             }
         }
@@ -180,21 +176,15 @@ public abstract class BinaryTree implements Tree {
         BinaryNode left = null;
         BinaryNode right = null;
         if (root.hasChildren()) {
-            if (root.getLeft() != null) {
+            if (root.getLeft() != null && root.compareTo(node) > 0) {
                 left = _get(root.getLeft(), node);
             }
 
-            if (root.getRight() != null) {
+            if (root.getRight() != null && root.compareTo(node) < 0) {
                 right = _get(root.getRight(), node);
             }
 
-            if (left != null) {
-                return left;
-            }
-
-            if (right != null) {
-                return right;
-            }
+           return Optional.ofNullable(left).orElse(right);
         }
 
         return null;
@@ -212,11 +202,11 @@ public abstract class BinaryTree implements Tree {
         Boolean right = Boolean.FALSE;
 
         if (root.hasChildren()) {
-            if (root.getLeft() != null) {
+            if (root.getLeft() != null && root.compareTo(node.getData()) > 0) {
                 left = _exists(node, root.getLeft());
             }
 
-            if (root.getRight() != null) {
+            if (root.getRight() != null && root.compareTo(node.getData()) < 0) {
                 right = _exists(node, root.getRight());
             }
         }

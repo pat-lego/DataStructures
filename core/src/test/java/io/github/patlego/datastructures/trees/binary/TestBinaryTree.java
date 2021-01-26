@@ -104,7 +104,7 @@ public class TestBinaryTree {
         Mockito.when(left.compareTo("left")).thenReturn(0);
         Mockito.when(right.compareTo("right")).thenReturn(0);
         Mockito.when(root.compareTo("left")).thenReturn(-1);
-        Mockito.when(root.compareTo("right")).thenReturn(-1);
+        Mockito.when(root.compareTo("right")).thenReturn(1);
 
         Mockito.when(root.hasChildren()).thenReturn(Boolean.TRUE);
         Mockito.when(left.hasChildren()).thenReturn(Boolean.FALSE);
@@ -126,24 +126,35 @@ public class TestBinaryTree {
         BinaryNode left = Mockito.mock(BinaryNode.class);
         BinaryNode right = Mockito.mock(BinaryNode.class);
 
+        BinaryNode left_left = Mockito.mock(BinaryNode.class);
+
         Mockito.when(root.getLeft()).thenReturn(left);
         Mockito.when(root.getRight()).thenReturn(right);
 
-        Mockito.when(root.getData()).thenReturn("root");
-        Mockito.when(left.getData()).thenReturn("left");
-        Mockito.when(right.getData()).thenReturn("right");
+        Mockito.when(root.getData()).thenReturn(3);
+        Mockito.when(left.getData()).thenReturn(2);
+        Mockito.when(left_left.getData()).thenReturn(1);
+        Mockito.when(right.getData()).thenReturn(4);
 
-        Mockito.when(root.compareTo(root)).thenReturn(0);
-        Mockito.when(root.compareTo(left)).thenReturn(-1);
-        Mockito.when(root.compareTo(right)).thenReturn(-1);
+        Mockito.when(root.compareTo(3)).thenReturn(0);
+        Mockito.when(root.compareTo(2)).thenReturn(1);
+        Mockito.when(root.compareTo(4)).thenReturn(-1);
+        Mockito.when(root.compareTo(1)).thenReturn(1);
 
-        Mockito.when(left.compareTo(left)).thenReturn(0);
-        Mockito.when(left.compareTo(root)).thenReturn(-1);
-        Mockito.when(left.compareTo(right)).thenReturn(-1);
+        Mockito.when(left.compareTo(2)).thenReturn(0);
+        Mockito.when(left.compareTo(3)).thenReturn(-1);
+        Mockito.when(left.compareTo(4)).thenReturn(-1);
+        Mockito.when(left.compareTo(1)).thenReturn(1);
 
-        Mockito.when(right.compareTo(right)).thenReturn(0);
-        Mockito.when(right.compareTo(root)).thenReturn(-1);
-        Mockito.when(right.compareTo(left)).thenReturn(-1);
+        Mockito.when(left_left.compareTo(2)).thenReturn(-1);
+        Mockito.when(left_left.compareTo(3)).thenReturn(-1);
+        Mockito.when(left_left.compareTo(4)).thenReturn(-1);
+        Mockito.when(left_left.compareTo(1)).thenReturn(0);
+
+        Mockito.when(right.compareTo(4)).thenReturn(0);
+        Mockito.when(right.compareTo(3)).thenReturn(1);
+        Mockito.when(right.compareTo(2)).thenReturn(1);
+        Mockito.when(right.compareTo(1)).thenReturn(1);
 
         Mockito.when(root.hasChildren()).thenReturn(Boolean.TRUE);
 
@@ -151,6 +162,7 @@ public class TestBinaryTree {
         Mockito.when(tree.exists(Mockito.any())).thenCallRealMethod();
 
         assertTrue(tree.exists(right));
+        assertTrue(!tree.exists(left_left));
     }
 
     @Test
