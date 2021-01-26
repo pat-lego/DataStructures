@@ -1,13 +1,13 @@
-package io.github.patlego.datastructures.trees.binary;
+package io.github.patlego.datastructures.trees.avl;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public abstract class DuplicateBinaryNode<T> extends BinaryNode<T> {
+public abstract class DuplicateAVLNode<T> extends AVLNode<T> {
 
     private Integer count = 1;
 
-    public DuplicateBinaryNode(T data) {
+    public DuplicateAVLNode(T data) {
         super(data);
     }
 
@@ -26,6 +26,5 @@ public abstract class DuplicateBinaryNode<T> extends BinaryNode<T> {
     public @Nonnegative @Nonnull Integer getCount() {
         return this.count;
     }
-    
-    
+
 }

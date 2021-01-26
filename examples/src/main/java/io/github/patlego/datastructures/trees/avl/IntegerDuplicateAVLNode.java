@@ -1,8 +1,8 @@
-package io.github.patlego.datastructures.trees.binary;
+package io.github.patlego.datastructures.trees.avl;
 
-public class IntegerDuplicateBinaryNode extends DuplicateBinaryNode<Integer> {
+public class IntegerDuplicateAVLNode extends DuplicateAVLNode<Integer> {
 
-    public IntegerDuplicateBinaryNode(Integer data) {
+    public IntegerDuplicateAVLNode(Integer data) {
         super(data);
     }
 
